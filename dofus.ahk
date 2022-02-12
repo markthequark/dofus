@@ -8,9 +8,7 @@ HotKeyMode := false
 TempDeactivateHotKeyMode := false
 
 ;; Alt-F5    toggle hotkey mode
-!F5::
-HotKeyMode := !HotKeyMode
-Return
+!F5::HotKeyMode := !HotKeyMode
 
 ;; Space    If on a dofus window, temporarily deactivate hotkey mode and send space (space opens the text input prompt)
 $Space::
