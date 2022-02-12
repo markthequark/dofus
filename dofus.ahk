@@ -8,7 +8,9 @@ HotKeyMode := false
 TempDeactivateHotKeyMode := false
 
 ;; Alt-F5    toggle hotkey mode
-!F5::HotKeyMode := !HotKeyMode
+!F5::
+HotKeyMode := !HotKeyMode
+Return
 
 ;; Space    If on a dofus window, temporarily deactivate hotkey mode and send space (space opens the text input prompt)
 $Space::
@@ -40,7 +42,7 @@ Return
 ;; f    If on a dofus window and using hotkeymode, cycle dofus windows
 $f::
 If (WinActive("ahk_group Dofus") and HotKeyMode)
-	GroupActivate, Dofus, r
+  GroupActivate, Dofus, r
 Else
   Send f
 Return
@@ -71,4 +73,18 @@ $!F3::
 if WinExist("Ichorid") {
   WinActivate
   Return
+}
+
+;; to display system tray tips
+;; TrayTip, Title, Body with string interpolation %Variable%, 0, 16
+;; Sleep 2500
+;; HideTrayTip()
+
+HideTrayTip() {
+  TrayTip  ; Attempt to hide it the normal way.
+  if SubStr(A_OSVersion,1,3) = "10." {
+    Menu Tray, NoIcon
+    Sleep 200  ; It may be necessary to adjust this sleep.
+    Menu Tray, Icon
+  }
 }
