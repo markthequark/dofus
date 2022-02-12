@@ -28,6 +28,15 @@ If (WinActive("ahk_group Dofus") and TempDeactivateHotKeyMode) {
 Send {Enter}
 Return
 
+;; Esc    If on a dofus window, reactivate hotkeymode if it was temporarily deactivated
+$Esc::
+If (WinActive("ahk_group Dofus") and TempDeactivateHotKeyMode) {
+  HotKeyMode := true
+  TempDeactivateHotKeyMode := false
+}
+Send {Esc}
+Return
+
 ;; f    If on a dofus window and using hotkeymode, cycle dofus windows
 $f::
 If (WinActive("ahk_group Dofus") and HotKeyMode)
