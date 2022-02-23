@@ -7,8 +7,8 @@ HotKeyMode := false
 ;; used to remember if hotkeymode was deactivated to type text input
 TempDeactivateHotKeyMode := false
 
-;; Alt-F5    toggle hotkey mode
-!F5::HotKeyMode := !HotKeyMode
+;; Alt-Esc    toggle hotkey mode
+!Esc::HotKeyMode := !HotKeyMode
 
 ;; Space    If on a dofus window, temporarily deactivate hotkey mode and send space (space opens the text input prompt)
 $Space::
@@ -37,6 +37,14 @@ If (WinActive("ahk_group Dofus") and TempDeactivateHotKeyMode) {
 Send {Esc}
 Return
 
+;; w    If on a dofus window and using hotkeymode, hold down f2
+$w::
+If (WinActive("ahk_group Dofus") and HotKeyMode)
+  sendinput, {F2 down}
+Else
+  Send w
+Return
+
 ;; f    If on a dofus window and using hotkeymode, cycle dofus windows
 $f::
 If (WinActive("ahk_group Dofus") and HotKeyMode)
@@ -45,33 +53,37 @@ Else
   Send f
 Return
 
+;; d    If on a dofus window and using hotkeymode, shift click
+$d::
+If (WinActive("ahk_group Dofus") and HotKeyMode)
+  Send +{Click} ; Shift+LeftClick
+Else
+  Send d
+Return
+
 ;; Alt-`    cycle dofus windows
 !`::GroupActivate, Dofus, r
 
 ;; Alt-F1    activate the window which contains the string Mark
 $!F1::
-if WinExist("Mark") {
+if WinExist("Mark")
   WinActivate
-  Return
-}
-
-$!F4::
-if WinExist("Kelpie") {
-  WinActivate
-  Return
-}
+Return
 
 $!F2::
-if WinExist("Haeler") {
+if WinExist("Haeler")
   WinActivate
-  Return
-}
+Return
 
 $!F3::
-if WinExist("Ichorid") {
+if WinExist("Ichorid")
   WinActivate
-  Return
-}
+Return
+
+$!F4::
+if WinExist("Kelpie")
+  WinActivate
+Return
 
 ;; to display system tray tips
 ;; TrayTip, Title, Body with string interpolation %Variable%, 0, 16
